@@ -1,5 +1,9 @@
-fastapi
-uvicorn
 torch
 transformers
+streamlit
+lime
+matplotlib
+requests
+fastapi
+uvicorn
 pydantic

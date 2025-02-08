@@ -1,10 +1,20 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow requests from all origins. For production, specify domains.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load the detoxification model
 MODEL_NAME = "s-nlp/bart-base-detox"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 

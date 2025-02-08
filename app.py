@@ -71,7 +71,7 @@ if st.session_state.get("original_text") and st.button("Rephrase Toxic Words"):
         try:
             # Call Render FastAPI for rephrasing
             response = requests.post(
-                "https://your-api.onrender.com/rephrase",  # Replace with your Render API URL
+                "https://toxic-app.onrender.com/rephrase",  # Your Render API URL
                 json={"text": st.session_state["original_text"]}
             )
             if response.status_code == 200:

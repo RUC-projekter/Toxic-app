@@ -8,8 +8,8 @@ from transformers import BertTokenizer, BertForSequenceClassification
 # Load your custom toxicity model
 @st.cache_resource
 def load_toxicity_model():
-    model = BertForSequenceClassification.from_pretrained("C:/Users/moaaz/Desktop/Toxic/models/bert_model")
-    tokenizer = BertTokenizer.from_pretrained("C:/Users/moaaz/Desktop/Toxic/models/bert_model")
+    model = BertForSequenceClassification.from_pretrained("moazla/bert-toxic-detection")  # Update with your Hugging Face model ID
+    tokenizer = BertTokenizer.from_pretrained("moazla/bert-toxic-detection")  # Update with your Hugging Face model ID
     return model.to("cuda" if torch.cuda.is_available() else "cpu"), tokenizer
 
 model, tokenizer = load_toxicity_model()
@@ -71,7 +71,7 @@ if st.session_state.get("original_text") and st.button("Rephrase Toxic Words"):
         try:
             # Call Render FastAPI for rephrasing
             response = requests.post(
-                "https://toxic-app.onrender.com/rephrase",  # Your Render API URL
+                "https://toxic-app.onrender.com/rephrase",  # Replace with your actual Render API URL
                 json={"text": st.session_state["original_text"]}
             )
             if response.status_code == 200:

@@ -3,24 +3,21 @@ from pydantic import BaseModel
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 
-# Initialize FastAPI app
 app = FastAPI()
 
-# Load the detoxification model
 MODEL_NAME = "s-nlp/bart-base-detox"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME).to(device)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-
-# Define the request schema
 class RephraseRequest(BaseModel):
     text: str
 
-# Define the rephrase endpoint
 @app.post("/rephrase")
 async def rephrase_text(request: RephraseRequest):
     try:
+
+        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME).to(device)
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+
         # Tokenize input text
         inputs = tokenizer(
             request.text,
